@@ -36,7 +36,7 @@ class Train
   end
 
   #Принимает маршрут следования и поезд автоматически помещается на первую станцию
-  def train_route=(route)
+  def route=(route)
     route.stations.first.take_train(self)
     @route = route
     @index_stations = 0

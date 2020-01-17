@@ -1,4 +1,4 @@
 class Car
-  attr_accessor :type
+  attr_reader :type
 
 end

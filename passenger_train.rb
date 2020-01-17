@@ -8,9 +8,8 @@ class PassengerTrain < Train
 
  #прицепляет только пассажирские вагоны
  def add_car(car)
-  if car.instance_of?(PassengerCar)
-    super
-  end
+  super
+end
 end
 
 end
