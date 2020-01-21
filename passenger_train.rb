@@ -10,6 +10,5 @@ class PassengerTrain < Train
  def add_car(car)
   super
 end
-end
 
 end

@@ -23,9 +23,13 @@ class Train
 
   #Прицепляет вагоны
   def add_car(car)
-    if @speed == 0
+    if @speed == 0 && type_is_train_type?(car)
       @cars >> car
     end
+  end
+
+  def type_is_train_type?(car)
+    @type == self.type
   end
 
   #Отцепляет вагоны

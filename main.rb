@@ -21,20 +21,20 @@ class RailWay
 
   def choice
 #puts "Введите команду:"
-puts "1, если необходимо Cоздать станцию"
-puts "2, если необходимо Cоздать поезд"
-puts "3, если необходимо Создать маршрут, Добавить станцию в маршрут,Удалить станцию из маршрута"
-puts "4, если необходимо Назначить маршрут поезду"
-puts "5, если необходимо Добавить вагоны к поезду"
-puts "6, если необходимо Отцепить вагоны от поезда"
-puts "7, если необходимо Перемещать поезд на 1 станцию"
-puts "8, если необходимо Просмотреть список станций и список поездов на станции"
-puts "0, для Выхода из программы"
+puts '1, если необходимо Cоздать станцию'
+puts '2, если необходимо Cоздать поезд'
+puts '3, если необходимо Создать маршрут, Добавить станцию в маршрут,Удалить станцию из маршрута'
+puts '4, если необходимо Назначить маршрут поезду'
+puts '5, если необходимо Добавить вагоны к поезду'
+puts '6, если необходимо Отцепить вагоны от поезда'
+puts '7, если необходимо Перемещать поезд на 1 станцию'
+puts '8, если необходимо Просмотреть список станций и список поездов на станции'
+puts '0, для Выхода из программы'
 end
 
 def action
   loop do
-    print "Введите номер команды: "
+    print 'Введите номер команды: '
     choice
 
     case gets.chomp.to_i
@@ -63,9 +63,9 @@ def action
 end
 
 def create_station
-  puts "Введите название станции"
+  puts 'Введите название станции'
   name = gets.chomp
-  self.stations << Station.new(name)
+  @stations << Station.new(name)
   puts "Создана станция #{name}"
   puts "Все станции: #{stations}"
 end
@@ -86,17 +86,22 @@ def create_train
 end
 
 def create_route
-  puts "Введите начальную и конечную станцию"
-  start_station = gets.chomp
-  end_station = gets.chomp
+  puts 'Введите порядковый номер начальной станции'
+  index_start_station = gets.chomp.to_i
+  puts 'Введите порядковый номер конечной станции'
+  index_end_station = gets.chomp.to_i
+  start_station = @stations[index_start_station-1]
+  end_station = @stations[index_end_station]
   route = Route.new(start_station, end_station)
-  routes << route
-  puts "Введите станцию, которую хотите добавить в маршрут"
-  station = gets.chomp
+  @routes << route
+  puts 'Введите порядковый номер cтанции, которую хотите добавить в маршрут'
+  index_add_station = gets.chomp.to_i
+  station = @stations[index_add_station-1]
   route.add_station(station)
   puts "Станция #{station} добавлена в маршрут"
-  puts "Введите станцию, которую хотите удалить"
-  station = gets.chomp
+  puts 'Введите порядковый номер станции, которую хотите удалить'
+  index_delete_station = gets.chomp.to_i
+  station = @stations[index_delete_station-1]
   route.delete_station(station)
   puts "Станция #{station} удалена из маршрута"
   puts "Маршрут: #{route.stations}"
@@ -104,35 +109,59 @@ end
 
 def assign_route
   puts "Все поезда: #{trains}"
-  puts "Маршрут: #{routes}"
-  puts "Выберите поезд для назначения маршрута"
+  #puts "Маршрут: #{routes}"
+  puts 'Выберите поезд для назначения маршрута'
   number_train = gets.chomp.to_i
   train = trains.find {|train| @number_train = number_train}
   puts "#{train}"
-  puts "Маршрут: #{routes}"
-  train.route = routes
+  puts 'Выберите номер маршрута'
+  index = gets.chomp.to_i
+  route = @routes [index - 1]
+  puts "Маршрут: #{route}"
+
+  train.route = route
   puts "Поезду #{number_train} назначен маршрут #{routes}"
 end
 
 def add_car
-  puts "К какому поезду прицепить вагон"
-  number_train = gets.chomp
-  train = trains.find(number_train)
-  train.add_car
-  puts "Прицеплен вагон"
+  puts 'Выберите тип создаваемого вагона 1 - пассажирский или 2- грузовой'
+  type = gets.chomp.to_i
+  puts 'Пронумеруйте вагон'
+  number = gets.chomp.to_i
+
+  if type == 1
+    car = PassengerCar.new(number)
+  elsif type == 2
+    car = CargoCar.new(number)
+  end
+
+  @cars << car
+  puts 'Выберите порядковый номер прицепляемого вагона'
+  index_car = gets.chomp.to_i
+  car = @cars[index_car - 1]
+  puts 'К какому поезду прицепить вагон'
+  number_train = gets.chomp.to_i
+  train = trains.find{|train| @number_train = number_train}
+  puts "#{train}"
+  train.add_car(car)
+  puts 'Прицеплен вагон'
 end
 
 def delete_car
-  puts "От какого поезда отцепить вагон"
+  puts 'От какого поезда нужно отцепить вагон'
   number_train = gets.chomp.to_i
-  train = trains.find(number_train)
+  train = trains.find{|train| @number_train = number_train}
+  puts "#{train}"
+  puts 'Выберите порядковый номер вагона, который нужно отцепить'
+  index_car = gets.chomp.to_i
+  car = @cars[index_car - 1]
   train.delete_car
-  puts "Отцеплен вагон"
+  puts 'Отцеплен вагон'
 end
 
 def move_train
   puts 'Выбираем поезд'
-  number_train = gets.chomp
+  number_train = gets.chomp.to_i
   train = trains.find {|train| @number_train = number_train}
   if train.route.nil?
     puts 'Необходимо назначить маршрут!'
@@ -148,19 +177,16 @@ def move_train
   end
 end
 
-
 def list_trains
-  puts "Станция, на которй необходимо посмотреть список поездов"
+  puts 'Станция, на которй необходимо посмотреть список поездов'
   name = gets.chomp
   station = stations.detect{|station| station.name == name}
   if station.nil?
-    puts "Выбранной станции нет"
+    puts 'Выбранной станции нет'
   else
     station.trains
   end
 end
-
-
 
 end
 

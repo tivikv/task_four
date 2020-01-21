@@ -5,8 +5,7 @@ class CargoTrain < Train
   end
 
   def add_car(car)
-    if car.instance_of?(CargoTrain)
-      super
-    end
+    super
   end
+
 end
