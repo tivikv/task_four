@@ -1,9 +1,9 @@
 class Car
   attr_reader :type, :number
 
-  def initialize(number)
+  def initialize(number, type)
     @number = number
-    @train = nil
+    @type = type
   end
 
 end

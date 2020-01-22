@@ -4,7 +4,7 @@ class Train
 
   attr_reader :speed, :type, :route, :number_train, :cars
 
-  def initialize(number_train, type, cars = 0)
+  def initialize(number_train, type, cars = [])
     @number_train = number_train
     @type = type
     @cars = cars
@@ -23,19 +23,23 @@ class Train
 
   #Прицепляет вагоны
   def add_car(car)
+    #puts "скорость #{@speed}"
+    #puts "#{type_is_train_type?(car)}"
     if @speed == 0 && type_is_train_type?(car)
-      @cars >> car
+      @cars << car
     end
   end
 
   def type_is_train_type?(car)
-    @type == self.type
+    #puts "тип поезда#{self.type}"
+    #puts "тип вагона#{car.type}"
+    self.type == car.type
   end
 
   #Отцепляет вагоны
-  def delete_car(car)
+  def delete_car
     if @speed == 0
-      @cars.delete(car)
+      @cars.last.delete
     end
   end
 

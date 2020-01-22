@@ -130,21 +130,22 @@ def add_car
   number = gets.chomp.to_i
 
   if type == 1
-    car = PassengerCar.new(number)
+    car = PassengerCar.new(number, type)
   elsif type == 2
-    car = CargoCar.new(number)
+    car = CargoCar.new(number, type)
   end
 
   @cars << car
+  #puts "#{@cars}"
   puts 'Выберите порядковый номер прицепляемого вагона'
   index_car = gets.chomp.to_i
   car = @cars[index_car - 1]
   puts 'К какому поезду прицепить вагон'
   number_train = gets.chomp.to_i
   train = trains.find{|train| @number_train = number_train}
-  puts "#{train}"
+  #puts "#{train}"
   train.add_car(car)
-  puts 'Прицеплен вагон'
+  puts "Прицеплен вагон #{train.cars} к поезду #{train}"
 end
 
 def delete_car
@@ -152,9 +153,6 @@ def delete_car
   number_train = gets.chomp.to_i
   train = trains.find{|train| @number_train = number_train}
   puts "#{train}"
-  puts 'Выберите порядковый номер вагона, который нужно отцепить'
-  index_car = gets.chomp.to_i
-  car = @cars[index_car - 1]
   train.delete_car
   puts 'Отцеплен вагон'
 end
@@ -178,8 +176,9 @@ def move_train
 end
 
 def list_trains
-  puts 'Станция, на которй необходимо посмотреть список поездов'
-  name = gets.chomp
+  puts 'Введите номер станции, на которoй необходимо посмотреть список поездов'
+  station_index = gets.chomp
+  station = @stations[station_index - 1]
   station = stations.detect{|station| station.name == name}
   if station.nil?
     puts 'Выбранной станции нет'
