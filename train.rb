@@ -1,6 +1,9 @@
 class Train
+ include Company
+ include InstanceCounter
 
   #TYPE = [:passenger, :cargo]
+  @@trains = {}
 
   attr_reader :speed, :type, :route, :number_train, :cars
 
@@ -9,6 +12,13 @@ class Train
     @type = type
     @cars = cars
     @speed = 0
+    @@trains[self.number_train] = self
+    instances_quantity
+  end
+
+  #Метод класса
+  def self.find(number_train)
+    @@trains[number_train]
   end
 
   #Возвращает текущую скорость
