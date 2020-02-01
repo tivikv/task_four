@@ -2,6 +2,8 @@ class Train
  include Company
  include InstanceCounter
 
+ NUMBER_TRAIN_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i
+
   #TYPE = [:passenger, :cargo]
   @@trains = {}
 
@@ -14,6 +16,13 @@ class Train
     @speed = 0
     @@trains[self.number_train] = self
     instances_quantity
+    validate!
+  end
+
+  def validate?
+    validate!
+  rescue
+    false
   end
 
   #Метод класса
@@ -86,9 +95,16 @@ class Train
   def next_station
     route.stations[@index_stations + 1].name if @index_stations != route.stations.length - 1
   end
+
   #Возвращает предыдущую станцию
   def previous_station
     route.stations[@index_stations - 1].name if @index_stations != 0
+  end
+
+  def validate!
+    raise "Номер поезда не указан и/или тип поезда" if number.nil? || type.nil?
+    raise "Номер поезда не должен быть больше 25 символов" if number.length > 25
+    raise "Некорректный номер поезда" if number !~ NUMBER_TRAIN_FORMAT
   end
 
 end
