@@ -1,4 +1,5 @@
 class Station
+  require_relative 'modules.rb'
   include InstanceCounter
   attr_reader :name, :trains
 
@@ -13,12 +14,12 @@ class Station
   def initialize(name)
     @name = name
     @trains= []
+    validate!
     @@stations << self
     instances_quantity
-    validate!
   end
 
-  def validate?
+  def valid?
     validate!
   rescue
     false
@@ -43,9 +44,25 @@ class Station
   protected
 
   def validate!
-    raise "Название станции должно быть указано" if name.nil?
+   station_name?
+   station_size?
+   correct_name?
+    true
+  end
+
+   def station_name?
+     raise "Название станции должно быть указано" if name.nil?
+    true
+  end
+
+  def station_size?
     raise "Название станции не может иметь больше 100 символов" if name.length > 100
+    true
+  end
+
+  def correct_name?
     raise "Некорректное название станции" if name !~ NAME_FORMAT
+    true
   end
 
 end

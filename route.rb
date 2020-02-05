@@ -1,4 +1,5 @@
 class Route
+  require_relative 'modules.rb'
   include InstanceCounter
   attr_reader :start_station, :end_station, :stations
 
@@ -8,11 +9,11 @@ class Route
     @start_station = start_station
     @end_station = end_station
     @stations = [start_station, end_station]
-    instances_quantity
     validate!
+    instances_quantity
   end
 
-  def validate?
+  def valid?
     validate!
   rescue
     false
@@ -30,9 +31,25 @@ class Route
 
   protected
   def validate!
+    statoin_nil?
+    station_station?
+    correct_name?
+    true
+  end
+
+  def statoin_nil?
     raise "Не указана начальная и/или конечная станция" if start_station || end_station.nil?
+    true
+  end
+
+  def station_station?
     raise "Начальная станция должная быть отличной от конечной станции" if @stations[index_start_station-1] == @stations[index_end_station]
+    true
+  end
+
+  def correct_name?
     raise "Некорректное название станции" if start_station !~ NAME_FORMAT && end_station !~ NAME_FORMAT
+    true
   end
 
 end
