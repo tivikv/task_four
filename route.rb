@@ -15,6 +15,7 @@ class Route
 
   def valid?
     validate!
+    true
   rescue
     false
   end
@@ -34,22 +35,18 @@ class Route
     statoin_nil?
     station_station?
     correct_name?
-    true
   end
 
   def statoin_nil?
     raise "Не указана начальная и/или конечная станция" if start_station || end_station.nil?
-    true
   end
 
   def station_station?
     raise "Начальная станция должная быть отличной от конечной станции" if @stations[index_start_station-1] == @stations[index_end_station]
-    true
   end
 
   def correct_name?
     raise "Некорректное название станции" if start_station !~ NAME_FORMAT && end_station !~ NAME_FORMAT
-    true
   end
 
 end

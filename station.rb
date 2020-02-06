@@ -21,6 +21,7 @@ class Station
 
   def valid?
     validate!
+    true
   rescue
     false
   end
@@ -47,22 +48,18 @@ class Station
    station_name?
    station_size?
    correct_name?
-    true
-  end
+ end
 
-   def station_name?
-     raise "Название станции должно быть указано" if name.nil?
-    true
-  end
+ def station_name?
+   raise "Название станции должно быть указано" if name.nil?
+ end
 
-  def station_size?
-    raise "Название станции не может иметь больше 100 символов" if name.length > 100
-    true
-  end
+ def station_size?
+  raise "Название станции не может иметь больше 100 символов" if name.length > 100
+end
 
-  def correct_name?
-    raise "Некорректное название станции" if name !~ NAME_FORMAT
-    true
-  end
+def correct_name?
+  raise "Некорректное название станции" if name !~ NAME_FORMAT
+end
 
 end

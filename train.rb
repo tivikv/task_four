@@ -22,6 +22,7 @@ class Train
 
   def valid?
     validate!
+    true
   rescue
     false
   end
@@ -106,22 +107,18 @@ class Train
     validate_number?
     number_size?
     correct_number?
-    true
   end
 
   def validate_number?
     raise "Номер поезда не указан и/или тип поезда" if number_train.nil? || type.nil?
-    true
   end
 
   def number_size?
     raise "Номер поезда не должен быть больше 25 символов" if number_train.size > 25
-    true
   end
 
   def correct_number?
     raise "Некорректный номер поезда" if number_train !~ NUMBER_TRAIN_FORMAT
-    true
   end
 
 end
