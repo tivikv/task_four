@@ -146,6 +146,14 @@ def add_car
   #puts "#{train}"
   train.add_car(car)
   puts "Прицеплен вагон #{train.cars} к поезду #{train}"
+  train.car_train do |car|
+    puts "Номер вагона: #{car.number}, Тип вагона: #{car.type}"
+    if car.type = 1
+      puts "Количество мест: #{car.seat}, Количество занятых мест: #{car.selected_seat}"
+    else
+      puts "Объем: #{car.vol}, Заполненный объем: #{car.selected_vol}"
+    end
+  end
 end
 
 def delete_car
@@ -183,7 +191,9 @@ def list_trains
   if station.nil?
     puts 'Выбранной станции нет'
   else
-    station.trains
+    station.train_on_station do |train|
+      puts "#{train.number}, #{train.type}"
+    end
   end
 end
 

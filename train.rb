@@ -121,4 +121,9 @@ class Train
     raise "Некорректный номер поезда" if number_train !~ NUMBER_TRAIN_FORMAT
   end
 
+  def car_train(&block)
+    return "Нет блока" unless block_given?
+    @cars.each {|car| yield(car)}
+  end
+
 end

@@ -62,4 +62,9 @@ def correct_name?
   raise "Некорректное название станции" if name !~ NAME_FORMAT
 end
 
+def train_on_station (&block)
+  return "Нет блока" unless block_given?
+  @trains.each { |train| yield(train) }
+end
+
 end
