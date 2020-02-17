@@ -8,13 +8,11 @@ class PassengerCar < Car
   end
 
   def take_seat
-   if @seat - @selected_seat > 0
-    @selected_seat += 1
+   @selected_seat += 1 if @seat - @selected_seat > 0
   end
-end
 
-def free_seat
+  def free_seat
   @seat - @selected_seat
-end
+  end
 
 end

@@ -8,9 +8,7 @@ class CargoCar < Car
   end
 
   def take_vol
-    if @vol - @selected_vol > 0
-      @selected_vol += 1
-    end
+    @selected_vol += 1 if @vol - @selected_vol > 0
   end
 
   def free_vol
