@@ -58,6 +58,8 @@ def action
       move_train
     when 8
       list_trains
+    when 9
+      take_place
     end
   end
 end
@@ -195,6 +197,28 @@ def list_trains
       puts "#{train.number}, #{train.type}"
     end
   end
+end
+
+def take_place
+  puts 'Выберите поезд, в котором хотите выбрать вагон'
+  number_train = gets.chomp.to_i
+  puts 'Выберите вагон для бронирования места'
+  index_car = gets.chomp.to_i
+  car = @cars[index_car - 1]
+  if type == 1
+    if car.free_seat > 0
+      car.take_seat
+    else
+      puts "Нет свободного места"
+    end
+  elsif type == 2
+    if car.free_vol > 0
+      car.take_vol
+    else
+      puts "Нет свободного места"
+    end
+  end
+
 end
 
 end

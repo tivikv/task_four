@@ -63,8 +63,11 @@ def correct_name?
 end
 
 def train_on_station (&block)
-  return "Нет блока" unless block_given?
-  @trains.each { |train| yield(train) }
+  if block_given?
+    @trains.each { |train| yield(train) }
+  else
+    return "Нет блока"
+  end
 end
 
 end

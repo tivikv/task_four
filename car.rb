@@ -1,5 +1,5 @@
 class Car
-  #include Company
+  include Company
   attr_reader :type, :number
 
   NUMBER_FORMAT = /\.d/i
